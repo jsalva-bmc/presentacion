@@ -603,7 +603,7 @@ body.editing [data-edit]:hover{outline-color:var(--electric);background:rgba(58,
         <div class="more"><p data-edit="" contenteditable="false">El norte que ordena todas las decisiones: hacia dónde crecer, contra qué tensiones y por qué camino.</p></div>
         <div class="hint">Ver más</div>
       </div>
-      <div class="eje rv d2 in open" tabindex="0">
+      <div class="eje rv d2 in" tabindex="0">
         <h3 data-edit="" contenteditable="false">Marca</h3>
         <p data-edit="" contenteditable="false">Construir <b>relevancia cultural</b> a través de <b>equity estratégico.</b></p>
         <div class="more"><p data-edit="" contenteditable="false">Marcas con verdades tangibles e intangibles: un ADN propio, un rol, una personalidad y una propuesta de valor que diferencia.</p></div>
@@ -865,7 +865,13 @@ document.querySelectorAll('.verb').forEach(v=>v.addEventListener('click',()=>{
 
 /* ============ ejes expandibles ============ */
 document.querySelectorAll('.eje').forEach(c=>{
-  const toggle=()=>c.classList.toggle('open');
+  const hint=c.querySelector('.hint');
+  const toggle=()=>{
+    const open=c.classList.toggle('open');
+    if(hint) hint.childNodes[0]
+      ? (hint.childNodes[0].nodeValue=open?'Ver menos':'Ver más')
+      : (hint.textContent=open?'Ver menos':'Ver más');
+  };
   c.addEventListener('click',toggle);
   c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
 });
