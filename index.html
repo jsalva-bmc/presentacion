@@ -192,7 +192,7 @@ h2{font-size:clamp(40px,5.8vw,72px);margin-bottom:24px;letter-spacing:-.015em;}
 .chap-head{display:flex;align-items:baseline;gap:22px;margin-bottom:10px;flex-wrap:wrap;}
 .chap-num{font-family:'Bricolage';font-weight:800;font-size:clamp(44px,6.5vw,84px);line-height:1;
   color:transparent;-webkit-text-stroke:1.5px rgba(245,247,252,.35);}
-.split{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:center;}
+.split{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:start;}
 @media(max-width:900px){.split{grid-template-columns:1fr}}
 .tagcase{display:inline-flex;align-items:center;gap:10px;font-family:'Bricolage';font-size:13px;
   letter-spacing:.24em;text-transform:uppercase;border:1px solid var(--card-border);border-radius:100px;
@@ -307,7 +307,7 @@ h2{font-size:clamp(40px,5.8vw,72px);margin-bottom:24px;letter-spacing:-.015em;}
   width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;backdrop-filter:blur(4px);}
 .ypf-gal{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
 .ypf-gal .media{aspect-ratio:16/9;}
-.split-ypf{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:center;}
+.split-ypf{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:start;}
 .acomp-right{display:flex;gap:clamp(14px,1.8vw,26px);align-items:center;}
 .acomp-right .reel-col{flex:0 0 auto;width:clamp(150px,36%,220px);}
 .acomp-right .ypf-stage{flex:1 1 auto;min-width:0;}
@@ -839,12 +839,17 @@ try{
 /* ============ fit-to-slide (desktop) ============ */
 function fitSlides(){
   const mobile=innerWidth<=900;
+  const chapIds=['disenando','implementando','acompanando'];
+  let chapScale=1;
   document.querySelectorAll('main section > .wrap').forEach(w=>{
     if(mobile){w.style.transform='';return;}
     const avail=innerHeight-(w.parentElement.id==='hero'?185:64);
     const h=w.offsetHeight;
-    w.style.transform = h>avail ? `scale(${Math.max(avail/h,.42)})` : '';
+    const s=h>avail?Math.max(avail/h,.42):1;
+    if(chapIds.indexOf(w.parentElement.id)>=0){ chapScale=Math.min(chapScale,s); }
+    else { w.style.transform = s<1?`scale(${s})`:''; }
   });
+  chapIds.forEach(id=>{ const w=document.querySelector('#'+id+'>.wrap'); if(w) w.style.transform = chapScale<1?`scale(${chapScale})`:''; });
 }
 addEventListener('load',fitSlides);
 addEventListener('resize',fitSlides);
