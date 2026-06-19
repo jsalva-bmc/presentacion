@@ -205,7 +205,11 @@ h2{font-size:clamp(40px,5.8vw,72px);margin-bottom:24px;letter-spacing:-.015em;}
 #disenando .tagcase i{background:var(--mostaza)}
 .tri-stage{position:relative;max-width:520px;margin:0 auto;width:100%;aspect-ratio:1.04/1;}
 .dcar-media--tri{background:radial-gradient(125% 125% at 78% 12%,rgba(211,32,39,.16),rgba(5,9,26,.94) 62%);}
-.dcar-media--tri .tri-stage{height:78%;width:auto;max-width:90%;margin:0;}
+.dcar-media--tri .tri-stage{height:84%;width:auto;max-width:94%;margin:0;}
+.dcar-media--tri .tnode{font-size:11px;padding:5px 8px;border-radius:9px;}
+.dcar-media--tri .tnode small{font-size:8px;margin-bottom:1px;}
+.dcar-media--tri .ctx-lbl{top:-26px;font-size:13px;}
+.dcar-cap .tri-desc b{color:var(--white);font-weight:600;}
 .tri-ctx{position:absolute;inset:0;clip-path:polygon(50% 0%,100% 100%,0% 100%);
   background:linear-gradient(180deg,rgba(232,69,60,.16),rgba(232,69,60,.05));}
 .tri-main{position:absolute;left:9%;right:9%;top:16%;bottom:6%;clip-path:polygon(50% 0%,100% 100%,0% 100%);
@@ -303,7 +307,7 @@ h2{font-size:clamp(40px,5.8vw,72px);margin-bottom:24px;letter-spacing:-.015em;}
   width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;backdrop-filter:blur(4px);}
 .ypf-gal{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
 .ypf-gal .media{aspect-ratio:16/9;}
-.split-ypf{display:grid;grid-template-columns:1fr 1.3fr;gap:clamp(24px,3.5vw,52px);align-items:center;}
+.split-ypf{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4vw,60px);align-items:center;}
 .acomp-right{display:flex;gap:clamp(14px,1.8vw,26px);align-items:center;}
 .acomp-right .reel-col{flex:0 0 auto;width:clamp(150px,36%,220px);}
 .acomp-right .ypf-stage{flex:1 1 auto;min-width:0;}
@@ -662,12 +666,12 @@ body.editing [data-edit]:hover{outline-color:var(--electric);background:rgba(58,
                     <div class="tri-core"></div>
                     <svg class="tri-arrows" viewBox="0 0 520 500" aria-hidden="true"><path d="M 250 165 C 195 200 175 260 195 330"></path><path d="M 230 382 C 270 400 320 392 355 360"></path><path d="M 352 300 C 345 245 315 200 280 175"></path></svg>
                     <button class="tnode on" data-k="1" style="left:50%;top:30%" data-edit="" contenteditable="false"><small>1.</small>Ambición<br>de Negocio</button>
-                    <button class="tnode" data-k="2" style="left:26%;top:76%" data-edit="" contenteditable="false"><small>2.</small>ADN</button>
-                    <button class="tnode" data-k="3" style="left:74%;top:76%" data-edit="" contenteditable="false"><small>3.</small>Tensiones<br>Humanas</button>
-                    <button class="tnode" data-k="4" style="left:50%;top:64%" data-edit="" contenteditable="false"><small>4.</small>Propuesta<br>de Valor</button>
+                    <button class="tnode" data-k="2" style="left:24%;top:81%" data-edit="" contenteditable="false"><small>2.</small>ADN</button>
+                    <button class="tnode" data-k="3" style="left:76%;top:81%" data-edit="" contenteditable="false"><small>3.</small>Tensiones<br>Humanas</button>
+                    <button class="tnode" data-k="4" style="left:50%;top:55%" data-edit="" contenteditable="false"><small>4.</small>Propuesta<br>de Valor</button>
                   </div>
                 </div>
-                <figcaption class="dcar-cap"><b data-edit="" contenteditable="false">Gifted Brands</b><span data-edit="" contenteditable="false">Diseñamos propósito y posicionamiento de marca</span></figcaption>
+                <figcaption class="dcar-cap"><b data-edit="" contenteditable="false">Gifted Brands</b><span class="tri-desc" id="triDesc" data-edit="" contenteditable="false"><b>Ambición de Negocio</b> — Objetivos de negocio: los comportamientos o creencias a cambiar para crecer.</span></figcaption>
               </figure>
 
               <figure class="dcar-slide">
@@ -872,6 +876,8 @@ const tpanel=document.getElementById('tpanel');
 function setStep(k){
   document.querySelectorAll('.tnode').forEach(n=>n.classList.toggle('on',n.dataset.k===k));
   document.querySelectorAll('#tsteps button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+  const td=document.getElementById('triDesc');
+  if(td&&TSTEPS[k]){td.innerHTML='<b>'+TSTEPS[k].t+'</b> — '+TSTEPS[k].d;}
   if(!tpanel)return;
   tpanel.classList.add('swap');
   setTimeout(()=>{
