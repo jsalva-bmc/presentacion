@@ -924,14 +924,13 @@ if(ytm){
       soundBtn.innerHTML=muted?'<i>🔇</i><span>Activar sonido</span>':'<i>🔊</i><span>Silenciar</span>';
       soundBtn.classList.toggle('sound-on',!muted);
     });
-    load();
     try{
       const ioYt=new IntersectionObserver(es=>es.forEach(e=>{
-        if(e.isIntersecting){ cmd('playVideo'); }
+        if(e.isIntersecting){ load(); cmd('playVideo'); }
         else{ cmd('pauseVideo'); }
-      }),{threshold:.3});
+      }),{threshold:.25});
       ioYt.observe(ytm);
-    }catch(err){}
+    }catch(err){ load(); }
   } else {
     const playYt=()=>open('https://www.youtube.com/watch?v='+id,'_blank');
     ytm.addEventListener('click',playYt);
